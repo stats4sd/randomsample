@@ -2,10 +2,10 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-   
+
    # Application title
    titlePanel("Producing a Random Sample"),
-   
+
    sidebarLayout(
     sidebarPanel(
       htmlOutput("text")
@@ -49,47 +49,47 @@ server <- function(input, output) {
     >as.numeric(as.character(input$Max))){
     stop("Sample size requested larger than total number of entries")
   }
-  
+
   main<-sample(x = 1:as.numeric(as.character(input$Max)),
                replace = FALSE,
                size=as.numeric(as.character(input$Main)) )
-  
+
   reduced<-(1:as.numeric(as.character(input$Max)))[-main]
-  
+
   replacement<-sample(x = reduced,replace = FALSE,
                       size=as.numeric(as.character(input$Replacement)))
-  
-  
-  
+
+
+
   sampleframe<-data.frame(ID=c(sort(main),replacement),
                           type=rep(c("main sample","replacement sample"),
                                    times=c(length(main),length(replacement))))
   sampleframe$replacement_order<-c(rep(0,length(main)),1:length(replacement))
   sampleframe
 })
-  
+
   output$downloadData <- downloadHandler(
-    
+
 
 filename = function() {
   paste(input$name,'-', Sys.Date(), '.csv', sep='')
 },
-   
-    
+
+
     content = function(con) {
       write.csv(sampleframe(), con,row.names=FALSE)
     }
   )
-  
+
 output$text<-renderText(
-  "Link to digital list Excel template: <a href=https://stats4sd.org/download/sample-frame-builder_2019-09-24_10:27:38/2019-10-01_17:21:40_digital-sample.xlsx/DIGITAL-SAMPLE.xlsx>here</a> <br>
-  Link to paper list Excel template: <a href=https://stats4sd.org/download/sample-frame-builder_2019-09-24_10:27:38/2019-10-01_17:21:40_paper-sample.xlsx/PAPER-SAMPLE.xlsx>here</a><br>"
+  "Link to digital list Excel template: <a href=https://stats4sd.org/download/431/sample-frame-builder_2019-09-24_10:27:38/2019-10-01_17:21:40_worked-examples.zip/Worked%20Examples.zip>here</a> <br>
+  Link to paper list Excel template: <a href=https://stats4sd.org/download/431/sample-frame-builder_2019-09-24_10:27:38/2019-10-01_17:21:40_paper-sample.xlsx/PAPER-SAMPLE.xlsx>here</a><br>"
 )
 output$instruct<-renderText(
   '<b>Instructions (DIGITAL SAMPLE)</b><br>
  <br>1.	Extract a list of unique names or IDs and copy them into the spreadsheet, in the sheet "FULL LIST". Do not modify the first two columns of the sheet - copy the data starting from Column C. Save a copy of this Excel file as "[SAMPLE-NAME]-SAMPLE.XLSX". Ensure that there are no repetitions in this list and that there are no blank or missing rows. If the list provided requires removing out of scope entries, do this BEFORE copying into this Excel file, as it is essential that the numeric ID column in the first column of the tab "FULL LIST" is sequential
  <br>2.	If the information provided about each entry spans more than once column then please copy all of these columns after column C  of the sheet "FULL LIST", but try to ensure the most relevant identifiable column (name / unique ID code) is shown in column C.
- <br>3.	If the final ID number in column A does not match the expected total, please double-check all entries have been entered and then follow-up with the source of the information to ensure you have been provided with a complete, current and correct list of all applicable entries. 
+ <br>3.	If the final ID number in column A does not match the expected total, please double-check all entries have been entered and then follow-up with the source of the information to ensure you have been provided with a complete, current and correct list of all applicable entries.
  <br>4.	Access the sampling tool: https://shiny.stats4sd.org/randomsample/
  <br>5.	Enter the total number of entries (determined based on the number of rows in the sheet "FULL LIST". This is the number of units in the list from which you want to sample. Column A has already been pre-filled with numbers up to 6000, but you should trim or expand it to the size of your list of units)
  <br>6.	Enter the desired number of samples for the main sample, and the desired size for the replacement sample. The latter are additional units selected in case you need to replace any units from the original sample, for example in case of non-responses.
@@ -113,11 +113,11 @@ output$instruct<-renderText(
  <br>10b.	If you are not permitted to copy information, then use highlighter pens to indicate the sampled entries. Use different colours for the main sample, and the replacement sample. For the replacement sample also write in the order of replacement onto the lists.
  <br>11.	You now have the randomly selected list of entries to include in your project.
 
-  
+
   '
 )
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
 
