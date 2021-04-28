@@ -82,7 +82,7 @@ filename = function() {
   )
 
 output$text<-renderText(
-  "Link to digital list Excel template: <a href=https://stats4sd.org/download/431/sample-frame-builder_2019-09-24_10:27:38/2019-10-01_17:21:40_worked-examples.zip/Worked%20Examples.zip>here</a> <br>
+  "Link to digital list Excel template: <a href=https://stats4sd.org/download/431/sample-frame-builder_2019-09-24_10:27:38/2019-10-01_17:21:40_digital-sample.xlsx/DIGITAL-SAMPLE.xlsx>here</a> <br>
   Link to paper list Excel template: <a href=https://stats4sd.org/download/431/sample-frame-builder_2019-09-24_10:27:38/2019-10-01_17:21:40_paper-sample.xlsx/PAPER-SAMPLE.xlsx>here</a><br>"
 )
 output$instruct<-renderText(
